@@ -48,17 +48,8 @@
     });
   };
 
-  /* TODO: Once the routes are handling '/' and '/about', we can delete
+  /* Done: Once the routes are handling '/' and '/about', we can delete
       this handleMainNav function. YESSSS! */
-
-  articleView.handleMainNav = function() {
-    $('.main-nav').on('click', '.tab', function() {
-      $('.tab-content').hide();
-      $(`#${$(this).data('content')}`).fadeIn();
-    });
-
-    $('.main-nav .tab:first').click();
-  };
 
   articleView.setTeasers = function() {
     $('.article-body *:nth-of-type(n+2)').hide();
@@ -73,7 +64,7 @@
   articleView.initIndexPage = () => {
     $('#ajax-spinner').fadeOut();
     $('#filters').fadeIn();
-    Article.all.forEach(article => {
+    Article.all.forEach(article => { //eslint-disable-line
       $('#articles').append(article.toHtml('#article-template'));
       if($(`#category-filter option:contains("${article.category}")`).length === 0) {
         $('#category-filter').append(article.toHtml('#category-filter-template'));
@@ -82,14 +73,11 @@
         $('#author-filter').append(article.toHtml('#author-filter-template'));
       }
     });
-    /* TODO: Remember to also remove any invocations of handleMainNav... */
+    /* Done: Remember to also remove any invocations of handleMainNav... */
     articleView.populateFilters();
     articleView.handleCategoryFilter();
     articleView.handleAuthorFilter();
-    articleView.handleMainNav();
     articleView.setTeasers();
   };
-
-  Article.fetchAll(articleView.initIndexPage);
   module.articleView = articleView;
 })(window);
